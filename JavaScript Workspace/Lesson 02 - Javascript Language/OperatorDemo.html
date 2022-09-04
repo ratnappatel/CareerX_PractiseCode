@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    // print a series of 1 2 3 4 10 5 6 7 8 26 9 10 11 12 42 .....100
+
+    var sum=0;
+    var no=0;
+    var count=0;
+    while(no<=100)
+    {
+        document.write((++no)+"  ");
+        sum+=no;
+        count++;
+        if(count==4)
+        {
+            document.write("<b>"+sum+"</b><br>");
+            sum=0;
+            count=0;
+        }
+    }
+</script>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var tasks = ["Cooking", "Buying Grocery"];
+        function addTask()
+        {
+              var task=document.getElementById('item').value;
+              console.log(task);  
+              tasks.push(task);
+              displayList();
+        }
+        function displayList()
+        {
+            for(var i=0;i<tasks.length;i++)
+            {
+                var field=document.createElement('input');
+                field.type="text";
+                field.value=tasks[i];
+                document.getElementById('tasks').appendChild(field);
+            
+            }       
+
+        }
+        </script>
+</head>
+<body>
+    <form>
+        Add ITEM
+        <input type="text" id="item"> <button  onclick="addTask()">Add</button>
+    </form>
+    <hr>
+    <div id="tasks"></div>
+    <hr>
+    <div id="completedTasks"></div>
+
+    <script>
+        displayList();
+      
+    </script>
+</body>
+</html>

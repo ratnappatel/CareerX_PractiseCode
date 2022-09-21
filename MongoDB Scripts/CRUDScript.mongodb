@@ -7,10 +7,10 @@ db.collection_name.insertOne()
 // The drop() command destroys all data from a collection.
 // Make sure you run it against the correct database and collection.
 db.sales.drop();
-
+use ecom
 // Insert a few documents into the sales collection.
 db.sales.insertMany([
- 
+ { '_id': 1, 'item': 'abc', 'price': 10, 'quantity': 20, 'date': new Date('2014-03-01T09:00:00Z') },
   { '_id': 2, 'item': 'jkl', 'price': 20, 'quantity': 1, 'date': new Date('2014-03-01T09:00:00Z') },
   { '_id': 3, 'item': 'xyz', 'price': 5, 'quantity': 10, 'date': new Date('2014-03-15T09:00:00Z') },
   { '_id': 4, 'item': 'xyz', 'price': 5, 'quantity':  20, 'date': new Date('2014-04-04T11:21:39.736Z') },
@@ -46,13 +46,56 @@ db.sales.find({item: /^a/, $or: [{quantity:10},{price:{$gt: 5}}]})
 // Run a find command to view items sold on April 4th, 2014.
 db.sales.find({ date: { $gte: new Date('2014-04-04'), $lt: new Date('2014-04-05') } });
 
+// findOne() method returns exactly one document as result
+
+db.sales.find().pretty()
+db.sales.findOne({item:'abc'})
+db.sales.find({item:'abc'})
+
+
+// Update Operations
+
+
+db.sales.updateMany({item:'abc'},{$set:{quantity: 4,price:125}})
+
+
+db.sales.updateOne({item:'abc'},{$set:{quantity: 4}})
+
+db.sales.replaceOne({item:'abc'},{_id:15,item:'abcd',quantity:100})
+
+
+
+// Delete Opration
+
+db.sales.deleteOne({item:'abcd'})
+
+db.sales.deleteMany({item:'abc'})
+
+
 // Build an aggregation to view total sales for each product in 2014.
 const aggregation = [
   { $match: { date: { $gte: new Date('2014-01-01'), $lt: new Date('2015-01-01') } } },
-  { $group: { _id: '$item', totalSaleAmount: { $sum: { $multiply: [ '$price', '$quantity' ] } } } }
+  { $group: { _id: '$item', totalSaleAmount: { $sum: { $multiply: [ '$price', '$quantity' ] } } } },
+  { $sort: {totalSaleAmount: -1 }}
 ];
-
 // Run the aggregation and open a cursor to the results.
 // Use toArray() to exhaust the cursor to return the whole result set.
 // You can use hasNext()/next() to iterate through the cursor page by page.
 db.sales.aggregate(aggregation);
+
+
+
+// Operators
+
+// Element Operator $exists
+db.sales.find()
+
+
+// $type operator
+
+db.sales.find({date:{$type: 'double'}})
+
+db.sales.find({quantity:{$exists: true, $gte:20}})
+
+
+db.sales.find()

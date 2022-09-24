@@ -85,6 +85,7 @@ db.sales.aggregate(aggregation);
 
 
 
+
 // Operators
 
 // Element Operator $exists
@@ -99,3 +100,41 @@ db.sales.find({quantity:{$exists: true, $gte:20}})
 
 
 db.sales.find()
+use school
+
+
+// Import external data[.json file] to your database
+
+mongoimport --jsonArray --db school --collection students --file D:\Datasets\students.json
+
+
+// Use Query to find data from Embedded Documents
+
+use school
+
+// Find score achieve during quiz by every student.
+
+db.students.find({scores:{type:'quiz'}})
+
+// this query try to search document containing only type field within scores field of main document
+// . notation we can specify query conditions for field in a document at particular index as well
+
+db.students.find({"scores":{
+      "score": 60.06045071030959,
+      "type": "exam"
+    }})
+
+
+
+    db.students.find({"scores":
+    { $elemMatch: {"score":{$gt: 50},
+      "type":'exam'
+    }
+    }})
+
+
+    // . notation & Index are mandatory operator for embedded documents query
+    db.students.find({ "scores.1.score": {$lt:50}})
+
+
+
